@@ -1,0 +1,47 @@
+Counter.js
+
+import React, { useState, useEffect } from "react";
+
+const Counter = () => {
+  const [count, setCount] = useState(0);
+
+  // useEffect to log a message every time the component renders
+  useEffect(() => {
+    console.log("Component rendered. Current count:", count);
+  });
+
+  const increment = () => {
+    setCount(count + 1);
+  };
+
+  const decrement = () => {
+    setCount(count - 1);
+  };
+
+  return (
+    <div style={{ textAlign: "center", padding: "20px" }}>
+      <h2>Counter</h2>
+      <p>Count: {count}</p>
+      <button onClick={increment} style={{ marginRight: "10px" }}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+    </div>
+  );
+};
+
+export default Counter;
+###############################################################################################
+ App.js 
+
+
+import React from "react";
+import Counter from "./Counter";
+
+function App() {
+  return (
+    <div className="App">
+      <Counter />
+    </div>
+  );
+}
+
+export default App;

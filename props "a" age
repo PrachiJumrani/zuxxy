@@ -1,0 +1,43 @@
+ UserProfile.js
+
+import React, { useState } from "react";
+
+const UserProfile = ({ name, age, email }) => {
+  const [currentAge, setCurrentAge] = useState(age);
+
+  const handleIncrementAge = () => {
+    setCurrentAge(currentAge + 1);
+  };
+
+  return (
+    <div style={{ border: "2px solid #ccc", padding: "20px", maxWidth: "300px", margin: "auto" }}>
+      <h2>User Profile</h2>
+      <p><strong>Name:</strong> {name}</p>
+      <p><strong>Age:</strong> {currentAge}</p>
+      <p><strong>Email:</strong> {email}</p>
+      <button onClick={handleIncrementAge}>Increase Age</button>
+    </div>
+  );
+};
+
+export default UserProfile;
+
+
+
+#####################################################################################33
+App.js 
+
+
+import React from "react";
+import UserProfile from "./UserProfile";
+
+function App() {
+  return (
+    <div className="App">
+      <UserProfile name="Akshay Kale" age={22} email="akshay@example.com" />
+    </div>
+  );
+}
+
+export default App;
+

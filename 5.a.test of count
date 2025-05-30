@@ -1,0 +1,51 @@
+ClickCounter.jsx
+..................
+import React, { useState } from 'react';
+
+const ClickCounter = () => {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <h2>Count: {count}</h2>
+      <button onClick={() => setCount(prev => prev + 1)}>Increment</button>
+    </div>
+  );
+};
+
+export default ClickCounter;
+...............................................................................................
+ClickCounter.test.jsx
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import ClickCounter from './ClickCounter';
+
+// 1. Test initial render
+test('renders with initial count 0', () => {
+  render(<ClickCounter />);
+  const countText = screen.getByText(/Count: 0/i);
+  expect(countText).toBeInTheDocument();
+});
+
+// 2. Test one button click
+test('increments count to 1 after one click', () => {
+  render(<ClickCounter />);
+  const button = screen.getByText(/Increment/i);
+  fireEvent.click(button);
+  const countText = screen.getByText(/Count: 1/i);
+  expect(countText).toBeInTheDocument();
+});
+
+// 3. Test multiple clicks
+test('increments count correctly after multiple clicks', () => {
+  render(<ClickCounter />);
+  const button = screen.getByText(/Increment/i);
+
+  fireEvent.click(button); // count = 1
+  fireEvent.click(button); // count = 2
+  fireEvent.click(button); // count = 3
+
+  const countText = screen.getByText(/Count: 3/i);
+  expect(countText).toBeInTheDocument();
+});
+

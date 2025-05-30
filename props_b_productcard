@@ -1,0 +1,41 @@
+ProductCard.jsx
+..................
+import React, { useState } from 'react';
+
+const ProductCard = ({ productName, price }) => {
+  const [quantity, setQuantity] = useState(0);
+
+  const handleAddToCart = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const totalPrice = quantity * price;
+
+  return (
+    <div style={styles.card}>
+      <h2>{productName}</h2>
+      <p>Price: ₹{price}</p>
+      <button onClick={handleAddToCart}>Add to Cart</button>
+      <p>Quantity: {quantity}</p>
+      <p>Total Price: ₹{totalPrice}</p>
+    </div>
+  );
+};
+
+export default ProductCard;
+................................................................................................
+App.jsx
+...........
+import React from 'react';
+import ProductCard from './ProductCard';
+
+function App() {
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '40px' }}>
+      <ProductCard productName="Wireless Mouse" price={499} />
+    </div>
+  );
+}
+
+export default App;
+

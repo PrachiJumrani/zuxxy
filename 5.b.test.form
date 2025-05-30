@@ -1,0 +1,113 @@
+LoginForm.jsx
+....................
+import React, { useState } from 'react';
+
+const LoginForm = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newErrors = {};
+
+    if (!email.trim()) {
+      newErrors.email = 'Email is required.';
+    }
+    if (!password.trim()) {
+      newErrors.password = 'Password is required.';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setSubmitted(false);
+    } else {
+      setErrors({});
+      setSubmitted(true);
+    }
+  };
+
+  return (
+    <div>
+      <h2>Login Form</h2>
+      <form onSubmit={handleSubmit} data-testid="login-form">
+        <div>
+          <label>Email:</label><br />
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter email"
+          />
+          {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
+        </div>
+
+        <div>
+          <label>Password:</label><br />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter password"
+          />
+          {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
+        </div>
+
+        <button type="submit">Login</button>
+      </form>
+
+      {submitted && (
+        <div data-testid="success-msg">
+          <h4>Login successful!</h4>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default LoginForm;
+......................................................................................
+
+LoginForm.test.jsx
+........
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import LoginForm from './LoginForm';
+
+// 1. Check for input fields
+test('renders email and password input fields', () => {
+  render(<LoginForm />);
+  expect(screen.getByPlaceholderText(/Enter email/i)).toBeInTheDocument();
+  expect(screen.getByPlaceholderText(/Enter password/i)).toBeInTheDocument();
+  expect(screen.getByText(/Login/i)).toBeInTheDocument();
+});
+
+// 2. Submit with empty fields
+test('displays error messages when fields are empty on submit', () => {
+  render(<LoginForm />);
+  fireEvent.click(screen.getByText(/Login/i));
+
+  expect(screen.getByText(/Email is required/i)).toBeInTheDocument();
+  expect(screen.getByText(/Password is required/i)).toBeInTheDocument();
+});
+
+// 3. Submit with valid values
+test('submits form and shows success message when inputs are valid', () => {
+  render(<LoginForm />);
+  fireEvent.change(screen.getByPlaceholderText(/Enter email/i), {
+    target: { value: 'user@example.com' }
+  });
+  fireEvent.change(screen.getByPlaceholderText(/Enter password/i), {
+    target: { value: 'password123' }
+  });
+  fireEvent.click(screen.getByText(/Login/i));
+
+  // No errors should be present
+  expect(screen.queryByText(/Email is required/i)).toBeNull();
+  expect(screen.queryByText(/Password is required/i)).toBeNull();
+
+  // Success message should appear
+  expect(screen.getByTestId('success-msg')).toBeInTheDocument();
+});
+

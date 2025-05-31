@@ -1,0 +1,20 @@
+Commands:
+For creating app: 
+npx create-react-app app_name
+.............................
+To run:
+npm start
+..................
+For testing
+Install library by typing in command prompt :
+npm install --save-dev jest @testing-library/react @testing-library/jest-dom
+..............................................................
+For testing to show to mam type kar prompt m:
+npm test filename
+.......................................................................................
+For React Native:
+Install ke liye:
+npx create-expo-app@latest
+.........,..................,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Run karne ke liye:
+npm start/npx expo start

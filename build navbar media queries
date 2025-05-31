@@ -1,0 +1,115 @@
+components/Navbar.js
+.....................
+import React, { useState } from 'react';
+import './Navbar.css';
+
+export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  return (
+    <nav className="navbar">
+      <div className="logo">MySite</div>
+      <div className={`nav-links ${menuOpen ? 'active' : ''}`}>
+        <a href="#" className="nav-item active">Home</a>
+        <a href="#" className="nav-item">About</a>
+        <a href="#" className="nav-item">Services</a>
+        <a href="#" className="nav-item">Contact</a>
+      </div>
+      <div className="hamburger" onClick={toggleMenu}>
+        ☰
+      </div>
+    </nav>
+  );
+}
+........................................................................................................................
+components/Navbar.css
+...........................
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #005f73;
+  padding: 12px 20px;
+  color: white;
+  position: relative;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.nav-links {
+  display: flex;
+  gap: 16px;
+}
+
+.nav-item {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.nav-item:hover {
+  color: #ffd166;
+}
+
+.nav-item.active {
+  border-bottom: 2px solid #ffd166;
+}
+
+/* Hamburger (mobile) */
+.hamburger {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 56px;
+    right: 0;
+    background-color: #005f73;
+    width: 100%;
+    padding: 10px 0;
+    transition: max-height 0.3s ease;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .nav-item {
+    padding: 10px 20px;
+    border-top: 1px solid #ccc;
+  }
+}
+.........................................................................
+App.js
+import React from 'react';
+import Navbar from './components/Navbar';
+
+function App() {
+  return (
+    <div>
+      <Navbar />
+      <h1 style={{ padding: '20px', textAlign: 'center' }}>Welcome to MySite</h1>
+    </div>
+  );
+}
+
+export default App;
+
